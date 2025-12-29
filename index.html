@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiCN资源站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config={
+            theme: {
+                extend: {
+                    colors: {
+                        github: {
+                            dark: '#161B22',
+                            darker: '#0D1117',
+                            blue: '#0969DA',
+                            gray: '#21262D',
+                            lightgray: '#8B949E'
+                        },
+                        coffee: {
+                            main: '#6F4E37',
+                            light: '#8B5A2B'
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['Consolas', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 1. 最高优先级：通配符+!important 强制全局斜体 */
+        *, *::before, *::after {
+            -webkit-tap-highlight-color: transparent;
+            font-style: italic !important;
+        }
+
+        /* 通用按钮按压动画：覆盖所有按钮 */
+        .func-btn, .coffee-btn, .repo-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 12px;
+            border-radius: 4px;
+            transition: all 0.15s ease;
+            transform: scale(1);
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+
+        /* 按钮点击按压效果 */
+        .func-btn:active, .coffee-btn:active, .repo-btn:active {
+            transform: scale(0.95);
+            opacity: 0.8;
+        }
+
+        /* 原有按钮样式 */
+        .func-btn {
+            background-color: transparent;
+            color: #8B949E;
+        }
+        .func-btn:hover { 
+            background-color: rgba(255,255,255,0.1); 
+            color: #fff;
+        }
+        .func-btn-dark-text {
+            color: #000 !important;
+        }
+        .func-btn-dark-text:hover {
+            background-color: rgba(0,0,0,0.1) !important;
+        }
+
+        .coffee-btn {
+            background-color: #6F4E37;
+            color: #fff;
+        }
+        .coffee-btn:hover { 
+            background-color: #8B5A2B; 
+        }
+        .coffee-btn-dark {
+            background-color: #8B5A2B !important;
+            color: #fff !important;
+        }
+
+        /* 仓库项按钮基础样式 - 固定蓝色背景 */
+        .repo-btn {
+            background-color: #0969DA !important;
+            color: #fff !important;
+        }
+
+        /* 下载提示文字样式 */
+        .download-tip {
+            color: #8B949E;
+            font-size: 10px;
+            margin-left: 8px;
+        }
+
+        #snowContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 99999;
+        }
+        .snowflake {
+            position: absolute;
+            color: #fff;
+            font-size: 14px;
+            user-select: none;
+            text-shadow: 0 0 4px #fff;
+            transition: opacity 0.8s, transform 0.2s;
+            will-change: left, top;
+        }
+        .snowflake-light-theme {
+            color: #0D1117 !important;
+            text-shadow: 0 0 4px #0D1117 !important;
+        }
+    </style>
+</head>
+<body class="bg-github-darker text-white font-mono">
+    <div id="snowContainer"></div>
+
+    <!-- 开关栏添加 id 用于样式控制 -->
+    <header class="sticky top-0 z-50 border-b border-github-gray py-3" id="headerBar">
+        <div class="flex items-center justify-center space-x-8 px-4">
+            <button id="snowToggle" class="func-btn text-gray-300 hover:text-white text-blue-400">
+                <i class="fa fa-snowflake-o"></i><span>雪花开关</span>
+            </button>
+            <button id="themeToggle" class="func-btn text-gray-300 hover:text-white">
+                <i class="fa fa-moon-o"></i><span>主题开关</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="px-4 py-6 relative z-10">
+        <aside class="mb-6 text-center">
+            <div class="h-32 w-32 mx-auto rounded-full border-2 border-github-gray overflow-hidden mb-4">
+                <img src="logo.jpg" alt="头像" class="w-full h-full object-cover">
+            </div>
+            <h2 class="text-xl font-bold">LiCN资源站</h2>
+            <p class="text-sm text-github-lightgray mb-4">正在运行测试中~</p>
+        </aside>
+
+        <main>
+            <div class="border-b border-github-gray pb-4 mb-6 flex items-center justify-between">
+                <button class="repo-btn">
+                    <i class="fa fa-book"></i><span>仓库项</span>
+                </button>
+                <a href="https://jcn101cvl5dk.feishu.cn/wiki/NYUpwdg9uiJcWGksFYzcF97mnbb" target="_blank" id="coffeeBtn" class="coffee-btn">
+                    <i class="fa fa-coffee"></i><span>请我喝咖啡</span>
+                </a>
+            </div>
+
+            <div class="space-y-3">
+                <div class="border border-github-gray rounded-md p-4 hover:bg-github-gray/30 transition-colors">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-lg font-medium text-github-blue hover:underline">
+                            <a href="https://example.com/tr-simulator-download" target="_blank">Tr、Kr2模拟器下载链接</a>
+                        </h3>
+                        <span class="text-xs px-2 py-1 bg-github-gray rounded-full text-github-lightgray">公共</span>
+                    </div>
+                    <p class="text-sm mt-2">
+                        <a href="https://www.123865.com/s/Miq5jv-p8Xsh" target="_blank" class="text-github-blue hover:underline">点我下载</a>
+                        <span class="download-tip">/请下载好123云盘并登录帐号后再进行后续操作</span>
+                    </p>
+                    <div class="flex items-center space-x-4 mt-3 text-xs text-github-lightgray">
+                        <span><i class="fa fa-circle text-green-500 mr-1"></i>工具/模拟器</span>
+                        <span>更新于 2025-12-29</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="border-t border-github-gray py-6 text-center text-sm text-github-lightgray">
+        <p>© 2025 LiCN资源站. 保留所有权利。</p>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const snowToggle = document.getElementById('snowToggle');
+        const snowContainer = document.getElementById('snowContainer');
+        const coffeeBtn = document.getElementById('coffeeBtn');
+        const headerBar = document.getElementById('headerBar'); // 获取开关栏 DOM
+        const body = document.body;
+        const allElements = document.querySelectorAll('*');
+        
+        let isDark = true;
+        let snowEnabled = true;
+        const SNOW_COUNT = 40;
+        const snowChars = ['❄️', '❅', '❆', '●', '❉'];
+        let snowTimer = null;
+        let snowParams = [];
+
+        // 初始化 - 设置开关栏初始背景（深色主题）
+        window.onload = () => {
+            initSnow();
+            startSnowAnimation();
+            headerBar.style.backgroundColor = '#0D1117';
+        }
+
+        function createSnowElement() {
+            const snow = document.createElement('div');
+            snow.className = 'snowflake';
+            if (!isDark) snow.classList.add('snowflake-light-theme');
+            snow.textContent = snowChars[Math.floor(Math.random() * snowChars.length)];
+            const size = Math.random() * 8 + 8;
+            snow.style.fontSize = `${size}px`;
+            return snow;
+        }
+
+        function initSnow() {
+            snowToggle.innerHTML = '<i class="fa fa-snowflake-o"></i><span>雪花开关</span>';
+            snowToggle.classList.add('text-blue-400');
+            snowContainer.innerHTML = '';
+            snowParams = [];
+
+            for (let i = 0; i < SNOW_COUNT; i++) {
+                const snow = createSnowElement();
+                const x = Math.random() * 100;
+                const y = Math.random() * -20;
+                const speedY = Math.random() * 0.3 + 0.2;
+                const speedX = Math.random() * 0.2 - 0.1;
+                const rotateSpeed = Math.random() * 1 + 0.5;
+
+                snow.style.left = `${x}vw`;
+                snow.style.top = `${y}vh`;
+                snow.style.transform = `rotate(0deg)`;
+                snowContainer.appendChild(snow);
+
+                snowParams.push({
+                    el: snow,
+                    x, y, speedY, speedX, rotateSpeed, rotate: 0
+                });
+            }
+        }
+
+        function startSnowAnimation() {
+            if (snowTimer) clearInterval(snowTimer);
+            snowTimer = setInterval(() => {
+                if (!snowEnabled) return;
+                snowParams.forEach(param => {
+                    param.y += param.speedY;
+                    param.x += param.speedX;
+                    param.rotate += param.rotateSpeed;
+
+                    if (param.y > 100) {
+                        param.y = -20;
+                        param.x = Math.random() * 100;
+                    }
+
+                    param.el.style.left = `${param.x}vw`;
+                    param.el.style.top = `${param.y}vh`;
+                    param.el.style.transform = `rotate(${param.rotate}deg)`;
+                });
+            }, 30);
+        }
+
+        function fadeOutSnow() {
+            document.querySelectorAll('.snowflake').forEach(snow => snow.style.opacity = 0);
+            setTimeout(() => snowContainer.innerHTML = '', 800);
+        }
+
+        snowToggle.addEventListener('click', () => {
+            snowEnabled = !snowEnabled;
+            if (snowEnabled) {
+                snowToggle.classList.add('text-blue-400');
+                if (!isDark) snowToggle.classList.add('func-btn-dark-text');
+                initSnow();
+                startSnowAnimation();
+            } else {
+                snowToggle.classList.remove('text-blue-400');
+                if (!isDark) snowToggle.classList.add('func-btn-dark-text');
+                fadeOutSnow();
+                clearInterval(snowTimer);
+            }
+        });
+
+        themeToggle.addEventListener('click', () => {
+            if (isDark) {
+                // 切换浅色主题
+                body.classList.replace('bg-github-darker', 'bg-white');
+                body.classList.replace('text-white', 'text-gray-800');
+                themeToggle.innerHTML = '<i class="fa fa-sun-o"></i><span>主题开关</span>';
+                snowToggle.classList.add('func-btn-dark-text');
+                themeToggle.classList.add('func-btn-dark-text');
+                snowToggle.classList.remove('text-gray-300', 'hover:text-white');
+                themeToggle.classList.remove('text-gray-300', 'hover:text-white');
+                coffeeBtn.classList.add('coffee-btn-dark');
+                // 浅色主题：开关栏背景设为白色
+                headerBar.style.backgroundColor = '#fff';
+                // 提示文字颜色调整
+                document.querySelectorAll('.download-tip').forEach(tip => tip.style.color = '#666');
+            } else {
+                // 切换深色主题
+                body.classList.replace('bg-white', 'bg-github-darker');
+                body.classList.replace('text-gray-800', 'text-white');
+                themeToggle.innerHTML = '<i class="fa fa-moon-o"></i><span>主题开关</span>';
+                snowToggle.classList.remove('func-btn-dark-text');
+                themeToggle.classList.remove('func-btn-dark-text');
+                snowToggle.classList.add('text-gray-300', 'hover:text-white');
+                themeToggle.classList.add('text-gray-300', 'hover:text-white');
+                if (snowEnabled) snowToggle.classList.add('text-blue-400');
+                coffeeBtn.classList.remove('coffee-btn-dark');
+                // 深色主题：开关栏背景设为黑色
+                headerBar.style.backgroundColor = '#0D1117';
+                // 提示文字颜色调整
+                document.querySelectorAll('.download-tip').forEach(tip => tip.style.color = '#8B949E');
+            }
+            allElements.forEach(el => {
+                el.classList.contains('bg-github-dark') && el.classList.replace('bg-github-dark', 'bg-gray-100');
+                el.classList.contains('border-github-gray') && el.classList.replace('border-github-gray', 'border-gray-200');
+                el.classList.contains('bg-github-gray') && el.classList.replace('bg-github-gray', 'bg-gray-200');
+                el.classList.contains('text-github-lightgray') && el.classList.replace('text-github-lightgray', 'text-gray-600');
+                el.classList.contains('hover:bg-github-gray/30') && el.classList.replace('hover:bg-github-gray/30', 'hover:bg-gray-100');
+            });
+            document.querySelectorAll('.snowflake').forEach(s => s.classList.toggle('snowflake-light-theme'));
+            isDark = !isDark;
+            snowEnabled && initSnow();
+        });
+
+        window.addEventListener('resize', () => { snowEnabled && initSnow(); });
+    </script>
+</body>
+</html>
